@@ -1,1 +1,14 @@
-<Solution />
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SensorGuard.Api/SensorGuard.Api.csproj" />
+    <Project Path="src/SensorGuard.Application/SensorGuard.Application.csproj" />
+    <Project Path="src/SensorGuard.Domain/SensorGuard.Domain.csproj" />
+    <Project Path="src/SensorGuard.Infrastructure/SensorGuard.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SensorGuard.Api.Tests/SensorGuard.Api.Tests.csproj" />
+    <Project Path="tests/SensorGuard.Application.Tests/SensorGuard.Application.Tests.csproj" />
+    <Project Path="tests/SensorGuard.Domain.Tests/SensorGuard.Domain.Tests.csproj" />
+    <Project Path="tests/SensorGuard.Infrastructure.Tests/SensorGuard.Infrastructure.Tests.csproj" />
+  </Folder>
+</Solution>
