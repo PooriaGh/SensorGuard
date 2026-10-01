@@ -60,8 +60,8 @@ internal static class TestRules
                 new EqualOperator(),
                 new BetweenOperator(),
             }.Concat(extraStateless ?? Enumerable.Empty<IStatelessOperator>()),
-            (extraStateful ?? Enumerable.Empty<IStatefulOperator>()));
+            new IStatefulOperator[] { new SustainedAboveOperator() }.Concat(extraStateful ?? Enumerable.Empty<IStatefulOperator>()));
 
-    public static SeriesEvaluator Evaluator(OperatorRegistry? registry = null) =>
-        new(registry ?? Registry());
+    public static SeriesEvaluator Evaluator(OperatorRegistry? registry = null, System.TimeSpan? cooldown = null) =>
+        new(registry ?? Registry(), new AlertPolicy(cooldown ?? System.TimeSpan.FromMinutes(5)));
 }

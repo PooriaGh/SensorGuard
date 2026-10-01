@@ -29,4 +29,7 @@ public interface IStatefulOperator
 
     /// <param name="orderedSeries">Readings of one series sorted by (timestamp, seq).</param>
     IReadOnlyList<Episode> Evaluate(Rule rule, IReadOnlyList<Reading> orderedSeries);
+
+    /// <summary>Human-readable reason attached to every reading covered by the episode.</summary>
+    string Describe(Rule rule, Episode episode);
 }
