@@ -24,18 +24,18 @@ description: "Task list for Sensor Ingestion, Stateful Rule Evaluation & Alertin
 
 **Purpose**: Solution skeleton with inward-only references. Nothing here contains logic.
 
-- [ ] T001 Run `git init` at the repository root and add `.gitignore` (bin/, obj/, *.db, *.db-journal, .vs/) so the incremental, conventional-commit history required by the constitution can exist; then make four separate commits so history shows the spec-kit flow: `docs: ratify constitution v1.0.0` (`.specify/`, `.claude/`), `docs: add feature specification and clarifications` (spec.md, checklists/), `docs: add implementation plan and design artifacts` (plan.md, research.md, data-model.md, contracts/, quickstart.md), `docs: add task breakdown` (tasks.md)
-- [ ] T002 Create `SensorGuard.slnx` and `Directory.Build.props` (TargetFramework net10.0, Nullable enable, ImplicitUsings disable, TreatWarningsAsErrors true, AnalysisLevel latest)
-- [ ] T003 [P] Create `src/SensorGuard.Domain/SensorGuard.Domain.csproj` with NO PackageReference and NO ProjectReference
-- [ ] T004 [P] Create `src/SensorGuard.Application/SensorGuard.Application.csproj` referencing Domain; PackageReference `Microsoft.Extensions.Logging.Abstractions` and `Microsoft.Extensions.Options`
-- [ ] T005 [P] Create `src/SensorGuard.Infrastructure/SensorGuard.Infrastructure.csproj` referencing Application (and Domain); PackageReference `Microsoft.Data.Sqlite`
-- [ ] T006 [P] Create `src/SensorGuard.Api/SensorGuard.Api.csproj` (Microsoft.NET.Sdk.Web) referencing all three; stub `Program.cs` ending with `public partial class Program;` so tests can use `WebApplicationFactory<Program>`; stub `appsettings.json`
-- [ ] T007 [P] Create `tests/SensorGuard.Domain.Tests/SensorGuard.Domain.Tests.csproj` (xunit, xunit.runner.visualstudio, Microsoft.NET.Test.Sdk, Shouldly) referencing Domain only
-- [ ] T008 [P] Create `tests/SensorGuard.Application.Tests/SensorGuard.Application.Tests.csproj` (same packages plus `Microsoft.Extensions.TimeProvider.Testing`) referencing Application and Domain
-- [ ] T009 [P] Create `tests/SensorGuard.Infrastructure.Tests/SensorGuard.Infrastructure.Tests.csproj` (same packages) referencing Infrastructure, Application, Domain
-- [ ] T010 [P] Create `tests/SensorGuard.Api.Tests/SensorGuard.Api.Tests.csproj` (same packages plus `Microsoft.AspNetCore.Mvc.Testing`) referencing Api
-- [ ] T011 Add all eight projects to `SensorGuard.slnx` and verify `dotnet build SensorGuard.slnx -warnaserror` and `dotnet test SensorGuard.slnx` succeed on the empty skeleton
-- [ ] T012 Commit: `chore: scaffold solution with Clean Architecture projects`
+- [X] T001 Run `git init` at the repository root and add `.gitignore` (bin/, obj/, *.db, *.db-journal, .vs/) so the incremental, conventional-commit history required by the constitution can exist; then make four separate commits so history shows the spec-kit flow: `docs: ratify constitution v1.0.0` (`.specify/`, `.claude/`), `docs: add feature specification and clarifications` (spec.md, checklists/), `docs: add implementation plan and design artifacts` (plan.md, research.md, data-model.md, contracts/, quickstart.md), `docs: add task breakdown` (tasks.md)
+- [X] T002 Create `SensorGuard.slnx` and `Directory.Build.props` (TargetFramework net10.0, Nullable enable, ImplicitUsings disable, TreatWarningsAsErrors true, AnalysisLevel latest)
+- [X] T003 [P] Create `src/SensorGuard.Domain/SensorGuard.Domain.csproj` with NO PackageReference and NO ProjectReference
+- [X] T004 [P] Create `src/SensorGuard.Application/SensorGuard.Application.csproj` referencing Domain; PackageReference `Microsoft.Extensions.Logging.Abstractions` and `Microsoft.Extensions.Options`
+- [X] T005 [P] Create `src/SensorGuard.Infrastructure/SensorGuard.Infrastructure.csproj` referencing Application (and Domain); PackageReference `Microsoft.Data.Sqlite`
+- [X] T006 [P] Create `src/SensorGuard.Api/SensorGuard.Api.csproj` (Microsoft.NET.Sdk.Web) referencing all three; stub `Program.cs` ending with `public partial class Program;` so tests can use `WebApplicationFactory<Program>`; stub `appsettings.json`
+- [X] T007 [P] Create `tests/SensorGuard.Domain.Tests/SensorGuard.Domain.Tests.csproj` (xunit, xunit.runner.visualstudio, Microsoft.NET.Test.Sdk, Shouldly) referencing Domain only
+- [X] T008 [P] Create `tests/SensorGuard.Application.Tests/SensorGuard.Application.Tests.csproj` (same packages plus `Microsoft.Extensions.TimeProvider.Testing`) referencing Application and Domain
+- [X] T009 [P] Create `tests/SensorGuard.Infrastructure.Tests/SensorGuard.Infrastructure.Tests.csproj` (same packages) referencing Infrastructure, Application, Domain
+- [X] T010 [P] Create `tests/SensorGuard.Api.Tests/SensorGuard.Api.Tests.csproj` (same packages plus `Microsoft.AspNetCore.Mvc.Testing`) referencing Api
+- [X] T011 Add all eight projects to `SensorGuard.slnx` and verify `dotnet build SensorGuard.slnx -warnaserror` and `dotnet test SensorGuard.slnx` succeed on the empty skeleton
+- [X] T012 Commit: `chore: scaffold solution with Clean Architecture projects`
 
 ---
 
