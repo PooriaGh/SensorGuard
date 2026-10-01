@@ -30,8 +30,6 @@ internal static class SqliteMapping
             reader.GetInt64(offset + 3));
         return new Reading(key, reader.GetDouble(offset + 4));
     }
-
-    public static string Number(double value) => value.ToString("R", CultureInfo.InvariantCulture);
 }
 
 public sealed class SqliteReadingStore : IReadingStore

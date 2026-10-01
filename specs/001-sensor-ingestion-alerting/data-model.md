@@ -47,10 +47,11 @@ identities in `ProcessingReport`).
 Operator contracts:
 
 ```text
-IStatelessOperator : Name; Validate(RuleParameters) -> ValidatedParameters | errors;
+IStatelessOperator : Name; Validate(RuleParameters) -> IReadOnlyList<string> errors (empty = usable);
                      IsViolated(double value, Rule rule) -> bool;  Describe(double value, Rule rule) -> string
-IStatefulOperator  : Name; Validate(RuleParameters) -> ValidatedParameters | errors;
-                     Evaluate(Rule rule, IReadOnlyList<Reading> orderedSeries) -> IReadOnlyList<Episode>
+IStatefulOperator  : Name; Validate(RuleParameters) -> IReadOnlyList<string> errors;
+                     Evaluate(Rule rule, IReadOnlyList<Reading> orderedSeries) -> IReadOnlyList<Episode>;
+                     Describe(Rule rule, Episode episode) -> string   (reason attached to every covered reading)
 ```
 
 Violation semantics (C22/C21): GreaterThan `v > value`; GreaterThanOrEqual `v >= value`;

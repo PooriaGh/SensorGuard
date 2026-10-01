@@ -10,8 +10,6 @@ public sealed class RuleParameters
 
     public RuleParameters(IReadOnlyDictionary<string, double> values) => _values = values;
 
-    public bool TryGet(string name, out double value) => _values.TryGetValue(name, out value);
-
     public double Get(string name) =>
         _values.TryGetValue(name, out var value)
             ? value
