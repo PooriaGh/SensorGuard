@@ -7,4 +7,7 @@
     <ProjectReference Include="..\SensorGuard.Infrastructure\SensorGuard.Infrastructure.csproj" />
     <ProjectReference Include="..\SensorGuard.Domain\SensorGuard.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\data\*" Link="data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

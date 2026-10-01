@@ -1,0 +1,13 @@
+[
+  { "id": "R01", "name": "Temperature hard limit", "enabled": true, "metric": "temperature", "operator": "GreaterThan", "value": 100 },
+  { "id": "R02", "name": "Negative vibration", "enabled": true, "metric": "vibration", "operator": "LessThan", "value": 0 },
+  { "id": "R03", "name": "Pressure operating band", "enabled": true, "metric": "pressure", "operator": "Between", "min": 0, "max": 12 },
+  { "id": "R04", "name": "Critical pump pressure", "enabled": true, "metric": "pressure", "deviceId": "PUMP-02", "operator": "GreaterThanOrEqual", "value": 14 },
+  { "id": "R05", "name": "Vibration sensor fault sentinel", "enabled": true, "metric": "vibration", "deviceId": "FAN-03", "operator": "Equal", "value": -9999 },
+  { "id": "R06", "name": "Temperature below freezing", "enabled": true, "metric": "temperature", "operator": "LessThanOrEqual", "value": 0 },
+  { "id": "R07", "name": "Overheating Sustained", "enabled": true, "metric": "temperature", "deviceId": "PUMP-01", "operator": "SustainedAbove", "threshold": 80, "durationSeconds": 30 },
+  { "id": "R08", "name": "Sustained elevated temperature", "enabled": true, "metric": "temperature", "operator": "SustainedAbove", "threshold": 71, "durationSeconds": 60 },
+  { "id": "R09", "name": "Sustained high pump pressure", "enabled": true, "metric": "pressure", "deviceId": "PUMP-02", "operator": "SustainedAbove", "threshold": 10, "durationSeconds": 300 },
+  { "id": "R10", "name": "Sustained fan vibration", "enabled": true, "metric": "vibration", "deviceId": "FAN-03", "operator": "SustainedAbove", "threshold": 5.5, "durationSeconds": 60 },
+  { "id": "R11", "name": "Low pressure (disabled)", "enabled": false, "metric": "pressure", "operator": "LessThan", "value": 2 }
+]

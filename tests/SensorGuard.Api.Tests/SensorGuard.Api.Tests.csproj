@@ -17,4 +17,7 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="Fixtures\*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
