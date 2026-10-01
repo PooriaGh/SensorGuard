@@ -1,12 +1,3 @@
-<!--
-Sync Impact Report
-- Version change: (unfilled template) -> 1.0.0
-- Modified principles: none (initial ratification)
-- Added principles: I-X (see below)
-- Added sections: Delivery and Process Standards, Governance
-- Removed sections: template placeholders SECTION_2 / SECTION_3 (replaced)
-- Follow-up TODOs: none
--->
 # SensorGuard Constitution
 
 SensorGuard is a backend service (C# / .NET 8 or 10) that ingests numeric IoT sensor readings from a
