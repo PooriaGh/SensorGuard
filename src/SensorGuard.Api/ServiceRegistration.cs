@@ -48,6 +48,7 @@ public static class ServiceRegistration
         services.AddSingleton<IReadingQuery, SqliteReadingQuery>();
         services.AddSingleton<IReportSink, ConsoleReportSink>();
         services.AddSingleton<ProcessReadingsFile>();
+        services.AddSingleton<GetAggregation>();
         return services;
     }
 }

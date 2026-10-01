@@ -1,9 +1,11 @@
 using SensorGuard.Api;
+using SensorGuard.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSensorGuard(builder.Configuration);
 
 var app = builder.Build();
+app.MapAggregationEndpoints();
 
 var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("SensorGuard.Startup");
 var report = await Startup.RunIngestionAsync(app.Services, logger, CancellationToken.None);
