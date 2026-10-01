@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sensorguard.local/schemas/rules.schema.json",
+  "title": "SensorGuard rules.json",
+  "description": "Array of rules. EVERY rule describes the VIOLATING condition, except Between, which describes the ACCEPTABLE inclusive range (a reading outside [min, max] is a violation). The schema documents canonical operator casing; the loader accepts any casing. Cross-rule checks (unique id) and min <= max are enforced at startup by RuleCatalog, not by this schema.",
+  "type": "array",
+  "items": { "$ref": "#/$defs/rule" },
+  "$defs": {
+    "rule": {
+      "type": "object",
+      "required": ["id", "name", "enabled", "metric", "operator"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "enabled": { "type": "boolean" },
+        "metric": { "enum": ["temperature", "pressure", "vibration"] },
+        "deviceId": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional. Absent means the rule applies to every device carrying the metric."
+        },
+        "operator": {
+          "enum": [
+            "GreaterThan", "GreaterThanOrEqual", "LessThan", "LessThanOrEqual",
+            "Equal", "Between", "SustainedAbove"
+          ]
+        },
+        "value": { "type": "number" },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "threshold": { "type": "number" },
+        "durationSeconds": { "type": "number", "exclusiveMinimum": 0 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "operator": { "enum": ["GreaterThan", "GreaterThanOrEqual", "LessThan", "LessThanOrEqual", "Equal"] } }, "required": ["operator"] },
+          "then": { "required": ["value"] }
+        },
+        {
+          "if": { "properties": { "operator": { "const": "Between" } }, "required": ["operator"] },
+          "then": { "required": ["min", "max"] }
+        },
+        {
+          "if": { "properties": { "operator": { "const": "SustainedAbove" } }, "required": ["operator"] },
+          "then": { "required": ["threshold", "durationSeconds"] }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "examples": [
+    [
+      { "id": "R1", "name": "Overheating", "enabled": true, "metric": "temperature", "operator": "GreaterThan", "value": 100 },
+      { "id": "R2", "name": "Negative vibration", "enabled": true, "metric": "vibration", "operator": "LessThan", "value": 0 },
+      { "id": "R3", "name": "Pressure normal band", "enabled": true, "metric": "pressure", "deviceId": "PUMP-01", "operator": "Between", "min": 1.0, "max": 8.0 },
+      { "id": "R4", "name": "Sustained high temperature", "enabled": true, "metric": "temperature", "operator": "SustainedAbove", "threshold": 80, "durationSeconds": 30 }
+    ]
+  ]
+}

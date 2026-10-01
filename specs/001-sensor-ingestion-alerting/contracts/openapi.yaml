@@ -1,0 +1,158 @@
+openapi: 3.0.3
+info:
+  title: SensorGuard API
+  version: 1.0.0
+  description: >
+    Read-only API over readings that were ingested at startup. Aggregates use acceptable
+    readings only. Interval semantics are half-open: from <= ts < to.
+paths:
+  /api/aggregations:
+    get:
+      operationId: getAggregations
+      summary: Time-bucketed statistics over acceptable readings
+      parameters:
+        - name: deviceId
+          in: query
+          required: true
+          schema: { type: string, minLength: 1 }
+          description: Device identifier (case-sensitive). An unknown device yields all-empty buckets.
+        - name: metric
+          in: query
+          required: true
+          schema: { type: string, enum: [temperature, pressure, vibration] }
+        - name: from
+          in: query
+          required: true
+          schema: { type: string, format: date-time }
+          description: Inclusive start. ISO-8601 with Z or an explicit offset. Buckets are aligned to this instant.
+        - name: to
+          in: query
+          required: true
+          schema: { type: string, format: date-time }
+          description: Exclusive end. Must be later than `from`.
+        - name: bucketSeconds
+          in: query
+          required: true
+          schema: { type: integer, format: int64, minimum: 1 }
+      responses:
+        '200':
+          description: Continuous series of buckets covering [from, to).
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AggregationResponse' }
+              example:
+                deviceId: PUMP-01
+                metric: temperature
+                from: '2025-06-01T08:00:00Z'
+                to: '2025-06-01T08:10:00Z'
+                bucketSeconds: 300
+                buckets:
+                  - { start: '2025-06-01T08:00:00Z', count: 2, average: 71.5, min: 70.0, max: 73.0 }
+                  - { start: '2025-06-01T08:05:00Z', count: 0, average: null, min: null, max: null }
+        '400':
+          description: >
+            Missing parameter, unparseable timestamp, from >= to, bucketSeconds <= 0, unknown metric,
+            or more than 10,000 buckets.
+          content:
+            application/problem+json:
+              schema: { $ref: '#/components/schemas/ValidationProblem' }
+              example:
+                type: https://tools.ietf.org/html/rfc9110#section-15.5.1
+                title: Invalid aggregation request
+                status: 400
+                errors:
+                  from: ['from must be earlier than to']
+  /api/alerts:
+    get:
+      x-optional: true
+      operationId: getAlerts
+      summary: (Optional) Stored alerts, ordered by startTs
+      responses:
+        '200':
+          description: All alerts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Alert' }
+  /api/readings/unacceptable:
+    get:
+      x-optional: true
+      operationId: getUnacceptableReadings
+      summary: (Optional) Unacceptable readings with the violated rules
+      parameters:
+        - { name: deviceId, in: query, required: false, schema: { type: string } }
+        - { name: metric, in: query, required: false, schema: { type: string, enum: [temperature, pressure, vibration] } }
+      responses:
+        '200':
+          description: Unacceptable readings ordered by (ts, seq).
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/UnacceptableReading' }
+components:
+  schemas:
+    AggregationResponse:
+      type: object
+      required: [deviceId, metric, from, to, bucketSeconds, buckets]
+      properties:
+        deviceId: { type: string }
+        metric: { type: string, enum: [temperature, pressure, vibration] }
+        from: { type: string, format: date-time }
+        to: { type: string, format: date-time }
+        bucketSeconds: { type: integer, format: int64 }
+        buckets:
+          type: array
+          items: { $ref: '#/components/schemas/Bucket' }
+    Bucket:
+      type: object
+      required: [start, count, average, min, max]
+      description: average, min and max are null exactly when count is 0. Average is unrounded.
+      properties:
+        start: { type: string, format: date-time }
+        count: { type: integer, minimum: 0 }
+        average: { type: number, format: double, nullable: true }
+        min: { type: number, format: double, nullable: true }
+        max: { type: number, format: double, nullable: true }
+    ValidationProblem:
+      type: object
+      required: [title, status, errors]
+      properties:
+        type: { type: string }
+        title: { type: string }
+        status: { type: integer, enum: [400] }
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items: { type: string }
+    Alert:
+      type: object
+      required: [ruleId, ruleName, deviceId, metric, startTs, endTs, peakValue, openAtEndOfData]
+      properties:
+        ruleId: { type: string }
+        ruleName: { type: string }
+        deviceId: { type: string }
+        metric: { type: string, enum: [temperature, pressure, vibration] }
+        startTs: { type: string, format: date-time }
+        endTs: { type: string, format: date-time }
+        peakValue: { type: number, format: double }
+        openAtEndOfData: { type: boolean }
+    UnacceptableReading:
+      type: object
+      required: [deviceId, metric, ts, seq, value, violations]
+      properties:
+        deviceId: { type: string }
+        metric: { type: string, enum: [temperature, pressure, vibration] }
+        ts: { type: string, format: date-time }
+        seq: { type: integer, format: int64 }
+        value: { type: number, format: double }
+        violations:
+          type: array
+          items:
+            type: object
+            required: [ruleId, reason]
+            properties:
+              ruleId: { type: string }
+              reason: { type: string }
