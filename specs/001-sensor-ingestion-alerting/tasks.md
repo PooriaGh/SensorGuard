@@ -290,3 +290,9 @@ Per the constitution, if any task threatens the two-day budget, raise it immedia
 - [X] T083 Add an Api startup test in tests/SensorGuard.Api.Tests/StartupFailFastTests.cs: a rules file with an unknown operator, a duplicate id and min > max makes Startup.RunIngestionAsync return null, creates no database file at the configured DatabasePath, and logs a Critical message naming every offending rule; a missing input file also returns null with a clear message per US2/AC6 (partial)
 - [X] T084 [P] Add tests/SensorGuard.Api.Tests/PathResolverTests.cs for PathResolver (absolute path returned unchanged, existing working-directory path wins, fallback to the application directory, unknown path returned unchanged), and record PathResolver and StartupResult in the Api section of the plan source tree or remove them, per plan: source tree (unrequested)
 - [X] T085 [P] Replace the raw classification literals "A" and "U" in src/SensorGuard.Infrastructure/Sqlite/SqliteDatabase.cs and SqliteStores.cs with one named constants class (for example ClassificationCodes) used by the schema CHECK, the update and both queries, per Constitution X (partial)
+
+---
+
+## Phase 11: Convergence
+
+- [X] T086 Add `*.db`, `*.db-shm`, `*.db-wal` and `*.db-journal` to .gitignore and untrack the accidentally committed src/SensorGuard.Api/sensorguard.db (`git rm --cached`), so a run or test that uses the default relative DatabasePath never dirties the repository, per T001 git hygiene and Constitution Delivery (contradicts)

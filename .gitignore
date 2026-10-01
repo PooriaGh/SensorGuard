@@ -17,3 +17,9 @@ TestResults/
 # OS
 Thumbs.db
 .DS_Store
+
+# SQLite databases created by runs and tests
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
