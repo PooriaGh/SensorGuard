@@ -46,6 +46,7 @@ public static class ServiceRegistration
         services.AddSingleton<IRuleResultStore, SqliteRuleResultStore>();
         services.AddSingleton<IAlertStore, SqliteAlertStore>();
         services.AddSingleton<IReadingQuery, SqliteReadingQuery>();
+        services.AddSingleton<IAlertQuery, SqliteAlertQuery>();
         services.AddSingleton<IReportSink, ConsoleReportSink>();
         services.AddSingleton<ProcessReadingsFile>();
         services.AddSingleton<GetAggregation>();

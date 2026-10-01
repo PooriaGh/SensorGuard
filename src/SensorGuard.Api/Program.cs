@@ -6,6 +6,7 @@ builder.Services.AddSensorGuard(builder.Configuration);
 
 var app = builder.Build();
 app.MapAggregationEndpoints();
+app.MapReadModelEndpoints();
 
 var logger = app.Services.GetRequiredService<ILoggerFactory>().CreateLogger("SensorGuard.Startup");
 var report = await Startup.RunIngestionAsync(app.Services, logger, CancellationToken.None);

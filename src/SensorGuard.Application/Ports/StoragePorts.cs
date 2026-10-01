@@ -56,6 +56,12 @@ public interface IReadingQuery
     Task<IReadOnlyList<UnacceptableReading>> GetUnacceptableAsync(SeriesKey? series, CancellationToken cancellationToken);
 }
 
+/// <summary>Read side for alerts.</summary>
+public interface IAlertQuery
+{
+    Task<IReadOnlyList<Alert>> GetAlertsAsync(CancellationToken cancellationToken);
+}
+
 /// <summary>Where the end-of-run report text is printed (console in production).</summary>
 public interface IReportSink
 {
