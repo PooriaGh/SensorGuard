@@ -7,6 +7,12 @@ using SensorGuard.Infrastructure.Sqlite;
 
 namespace SensorGuard.Api;
 
+/// <summary>Holds the report of the ingestion run that happened at startup (for diagnostics and tests).</summary>
+public sealed class StartupResult
+{
+    public ProcessingReport? Report { get; set; }
+}
+
 /// <summary>
 /// Startup sequence (research R6): load and validate rules (fail fast, before the database is touched), create the
 /// schema, ingest the input file and print the report. Only after this completes does the API start serving.

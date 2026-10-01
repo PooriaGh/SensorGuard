@@ -49,6 +49,7 @@ public static class ServiceRegistration
         services.AddSingleton<IReportSink, ConsoleReportSink>();
         services.AddSingleton<ProcessReadingsFile>();
         services.AddSingleton<GetAggregation>();
+        services.AddSingleton<StartupResult>();
         return services;
     }
 }

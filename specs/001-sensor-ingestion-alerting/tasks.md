@@ -197,14 +197,14 @@ description: "Task list for Sensor Ingestion, Stateful Rule Evaluation & Alertin
 
 ### Tests for User Story 6 (write first, confirm they FAIL)
 
-- [ ] T072 [P] [US6] `tests/SensorGuard.Application.Tests/ReportFormatterTests.cs`: output contains every report line (lines read, blank, parsed, invalid with per-reason breakdown, file duplicates, already stored, newly stored, rules loaded enabled/total, rule evaluations, acceptable, unacceptable, rule violations, alerts generated, alerts suppressed, elapsed) with the right numbers
-- [ ] T073 [P] [US6] `tests/SensorGuard.Application.Tests/ProcessReadingsFileLoggingTests.cs` with `CapturingLogger`: invalid record and conflicting duplicate log at Warning; rules loaded, episode detected, alert raised, suppressed alert and the report log at Information; a run of valid readings with Information enabled emits NO per-reading Information entries; per-reading detail appears only at Debug
-- [ ] T074 [P] [US6] `tests/SensorGuard.Api.Tests/SuppliedFileEndToEndTests.cs`: process the supplied files, used as fixtures copied to `tests/SensorGuard.Api.Tests/Fixtures/` (T019), into a temp database; assert all four report invariants, SC-001 (every line accounted for), SC-003 (second run: `NewlyStored == 0`, row counts unchanged), shuffled-copy file (seeded shuffle) gives identical alerts and classifications (SC-002)
+- [X] T072 [P] [US6] `tests/SensorGuard.Application.Tests/ReportFormatterTests.cs`: output contains every report line (lines read, blank, parsed, invalid with per-reason breakdown, file duplicates, already stored, newly stored, rules loaded enabled/total, rule evaluations, acceptable, unacceptable, rule violations, alerts generated, alerts suppressed, elapsed) with the right numbers
+- [X] T073 [P] [US6] `tests/SensorGuard.Application.Tests/ProcessReadingsFileLoggingTests.cs` with `CapturingLogger`: invalid record and conflicting duplicate log at Warning; rules loaded, episode detected, alert raised, suppressed alert and the report log at Information; a run of valid readings with Information enabled emits NO per-reading Information entries; per-reading detail appears only at Debug
+- [X] T074 [P] [US6] `tests/SensorGuard.Api.Tests/SuppliedFileEndToEndTests.cs`: process the supplied files, used as fixtures copied to `tests/SensorGuard.Api.Tests/Fixtures/` (T019), into a temp database; assert all four report invariants, SC-001 (every line accounted for), SC-003 (second run: `NewlyStored == 0`, row counts unchanged), shuffled-copy file (seeded shuffle) gives identical alerts and classifications (SC-002)
 
 ### Implementation for User Story 6
 
-- [ ] T075 [US6] Implement `src/SensorGuard.Application/ReportFormatter.cs` (plain text, stable ordering) and call it from `ProcessReadingsFile` completion path: write to the console through an `IReportSink` port (`ConsoleReportSink` in `src/SensorGuard.Api/ConsoleReportSink.cs`) and emit one structured Information log entry with named properties; check the `report` invariants on every run (all builds) and log a Warning naming the broken invariant if one fails
-- [ ] T076 [US6] Run US6 tests green, refactor, commit: `feat(app): reconciled processing report and log-level policy`
+- [X] T075 [US6] Implement `src/SensorGuard.Application/ReportFormatter.cs` (plain text, stable ordering) and call it from `ProcessReadingsFile` completion path: write to the console through an `IReportSink` port (`ConsoleReportSink` in `src/SensorGuard.Api/ConsoleReportSink.cs`) and emit one structured Information log entry with named properties; check the `report` invariants on every run (all builds) and log a Warning naming the broken invariant if one fails
+- [X] T076 [US6] Run US6 tests green, refactor, commit: `feat(app): reconciled processing report and log-level policy`
 
 **Checkpoint**: All six stories complete and demonstrable.
 

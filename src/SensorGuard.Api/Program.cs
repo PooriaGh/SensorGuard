@@ -14,6 +14,8 @@ if (report is null)
     return 2;
 }
 
+app.Services.GetRequiredService<StartupResult>().Report = report;
+
 await app.RunAsync();
 return 0;
 

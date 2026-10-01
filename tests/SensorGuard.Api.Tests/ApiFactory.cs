@@ -12,12 +12,12 @@ public sealed class ApiFactory : WebApplicationFactory<Program>
     private readonly string _inputPath;
     private readonly string _rulesPath;
 
-    public ApiFactory(string inputContent, string rulesContent)
+    public ApiFactory(string inputContent, string rulesContent, string? existingDatabasePath = null)
     {
         Directory.CreateDirectory(_dir);
         _inputPath = Path.Combine(_dir, "input.json");
         _rulesPath = Path.Combine(_dir, "rules.json");
-        DatabasePath = Path.Combine(_dir, "test.db");
+        DatabasePath = existingDatabasePath ?? Path.Combine(_dir, "test.db");
         File.WriteAllText(_inputPath, inputContent);
         File.WriteAllText(_rulesPath, rulesContent);
     }
