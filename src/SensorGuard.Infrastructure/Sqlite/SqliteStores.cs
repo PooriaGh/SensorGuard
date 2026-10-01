@@ -97,7 +97,7 @@ public sealed class SqliteReadingStore : IReadingStore
         var seq = command.Parameters.Add("$s", SqliteType.Integer);
         foreach (var item in classifications)
         {
-            classification.Value = item.Classification == Classification.Acceptable ? "A" : "U";
+            classification.Value = ClassificationCodes.For(item.Classification);
             device.Value = item.Key.Device.Value;
             metric.Value = MetricNames.Format(item.Key.Metric);
             timestamp.Value = TimestampFormat.Format(item.Key.Timestamp);
@@ -206,7 +206,7 @@ public sealed class SqliteReadingQuery : IReadingQuery
         await using var command = connection.CreateCommand();
         command.CommandText =
             "SELECT device_id, metric, ts_utc, seq, value FROM readings "
-            + "WHERE device_id = $d AND metric = $m AND classification = 'A' AND ts_utc >= $from AND ts_utc < $to "
+            + "WHERE device_id = $d AND metric = $m AND classification = '" + ClassificationCodes.Acceptable + "' AND ts_utc >= $from AND ts_utc < $to "
             + "ORDER BY ts_utc, seq";
         command.Parameters.AddWithValue("$d", series.Device.Value);
         command.Parameters.AddWithValue("$m", MetricNames.Format(series.Metric));
@@ -231,7 +231,7 @@ public sealed class SqliteReadingQuery : IReadingQuery
         command.CommandText =
             "SELECT r.device_id, r.metric, r.ts_utc, r.seq, r.value, v.rule_id, v.reason FROM readings r "
             + "LEFT JOIN rule_results v ON v.device_id = r.device_id AND v.metric = r.metric AND v.ts_utc = r.ts_utc AND v.seq = r.seq "
-            + "WHERE r.classification = 'U' "
+            + "WHERE r.classification = '" + ClassificationCodes.Unacceptable + "' "
             + (series is null ? string.Empty : "AND r.device_id = $d AND r.metric = $m ")
             + "ORDER BY r.device_id, r.metric, r.ts_utc, r.seq, v.rule_id";
         if (series is { } s)

@@ -26,14 +26,14 @@ public static class TimestampFormat
 /// <summary>Opens SQLite connections and creates the schema. The natural keys are the primary keys (Principle VI).</summary>
 public sealed class SqliteDatabase
 {
-    private const string Schema = """
+    private static readonly string Schema = $$"""
         CREATE TABLE IF NOT EXISTS readings (
             device_id      TEXT    NOT NULL,
             metric         TEXT    NOT NULL,
             ts_utc         TEXT    NOT NULL,
             seq            INTEGER NOT NULL,
             value          REAL    NOT NULL,
-            classification TEXT    NULL CHECK (classification IN ('A', 'U')),
+            classification TEXT    NULL CHECK (classification IN ('{{ClassificationCodes.Acceptable}}', '{{ClassificationCodes.Unacceptable}}')),
             PRIMARY KEY (device_id, metric, ts_utc, seq)
         ) WITHOUT ROWID;
 

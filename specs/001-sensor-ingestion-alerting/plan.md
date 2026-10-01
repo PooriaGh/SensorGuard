@@ -114,6 +114,9 @@ src/
 └── SensorGuard.Api/                   # composition root
     ├── Program.cs     (DI, options, startup sequence, endpoint group)
     ├── ConsoleReportSink.cs
+    ├── PathResolver.cs        (relative paths: working directory first, then next to the app)
+    ├── Startup.cs             (startup sequence + StartupResult holding the startup report)
+    ├── ServiceRegistration.cs (composition root wiring)
     ├── Endpoints/     (AggregationEndpoints, optional ReadModelEndpoints)
     └── appsettings.json
 tests/

@@ -6,14 +6,21 @@ namespace SensorGuard.Api;
 /// </summary>
 public static class PathResolver
 {
-    public static string Resolve(string path)
+    public static string Resolve(string path) => Resolve(path, Directory.GetCurrentDirectory(), AppContext.BaseDirectory);
+
+    public static string Resolve(string path, string workingDirectory, string applicationDirectory)
     {
-        if (Path.IsPathRooted(path) || File.Exists(path))
+        if (Path.IsPathRooted(path))
         {
             return path;
         }
 
-        var besideApplication = Path.Combine(AppContext.BaseDirectory, path);
+        if (File.Exists(Path.Combine(workingDirectory, path)))
+        {
+            return path;
+        }
+
+        var besideApplication = Path.Combine(applicationDirectory, path);
         return File.Exists(besideApplication) ? besideApplication : path;
     }
 }
